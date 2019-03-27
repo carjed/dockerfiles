@@ -14,8 +14,6 @@ ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
 RUN buildDeps='make build-essential g++ gcc python2.7 locales' && softDeps="tmux git" \
- && locale-gen en_US.UTF-8 \
- && dpkg-reconfigure locales \
  && apt-get update && apt-get upgrade -y \
  && apt-get install -y $buildDeps $softDeps --no-install-recommends \
  && apt-get install python3-pip \
