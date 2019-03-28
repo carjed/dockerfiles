@@ -14,12 +14,16 @@ LABEL maintainer="Jedidiah Carlson <jed.e.carlson@gmail.com>"
 #ENV LANG=en_US.UTF-8
 #ENV LC_ALL=en_US.UTF-8
 
-RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py" \
- && python get-pip.py \
- && pip install pylint \
- && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
- && npm cache clean --force \
- && git reset --hard
+RUN apt-get update && apt-get upgrade -y \
+ && apt-get install -y python3-enchant \
+ && pip install --no-cache-dir flake8 flake8-docstrings pylint pyenchant
+
+#RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py" \
+# && python get-pip.py \
+# && pip install pylint \
+# && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+# && npm cache clean --force \
+# && git reset --hard
 
 #RUN buildDeps='make build-essential g++ gcc python2.7 locales' && softDeps="tmux git" \
 # && apt-get update && apt-get upgrade -y \
