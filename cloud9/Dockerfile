@@ -17,7 +17,7 @@ LABEL maintainer="Jedidiah Carlson <jed.e.carlson@gmail.com>"
 USER root
 
 RUN apt-get update && apt-get upgrade -y \
- && apt-get install -y python3-enchant \
+ && apt-get install -y python3-enchant wget \
  && wget -O get-pip.py 'https://bootstrap.pypa.io/get-pip.py' \
  && python3 get-pip.py \
     --disable-pip-version-check \
