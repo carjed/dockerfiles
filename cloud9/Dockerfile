@@ -18,7 +18,6 @@ RUN buildDeps='make build-essential g++ gcc python2.7 locales' && softDeps="tmux
  && apt-get install -y $buildDeps $softDeps --no-install-recommends \
  && apt-get install python3-pip \
  && pip install pylint \
- && locale-gen en_US.UTF-8 \
  && npm install -g forever && npm cache clean --force \
  && git clone --depth=5 https://github.com/c9/core.git /cloud9 && cd /cloud9 \
  && scripts/install-sdk.sh \
