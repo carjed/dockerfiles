@@ -14,16 +14,17 @@ LABEL maintainer="Jedidiah Carlson <jed.e.carlson@gmail.com>"
 #ENV LANGUAGE=en_US.UTF-8
 #ENV LANG=en_US.UTF-8
 #ENV LC_ALL=en_US.UTF-8
+USER root
 
-RUN USER=c9user \
- && GROUP=c9user \
- && apt-get update && apt-get upgrade -y \
+RUN apt-get update && apt-get upgrade -y \
  && apt-get install -y python3-enchant \
  && wget -O get-pip.py 'https://bootstrap.pypa.io/get-pip.py' \
  && python3 get-pip.py \
     --disable-pip-version-check \
     --no-cache-dir \
  && pip install --no-cache-dir flake8 flake8-docstrings pylint pyenchant
+
+USER c9user:c9user
 
 #RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py" \
 # && python get-pip.py \
