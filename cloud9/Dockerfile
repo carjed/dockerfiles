@@ -6,7 +6,8 @@
 # This dockerfile may not work on RPi you can find more info on how make it work on this issue:
 # https://github.com/sapk/dockerfiles/issues/40
 
-FROM sapk/cloud9
+#FROM sapk/cloud9
+FROM mstev0du/cloud9-ide
 # FROM node:slim
 LABEL maintainer="Jedidiah Carlson <jed.e.carlson@gmail.com>"
 
