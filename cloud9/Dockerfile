@@ -17,7 +17,7 @@ LABEL maintainer="Jedidiah Carlson <jed.e.carlson@gmail.com>"
 RUN apt-get update && apt-get upgrade -y \
  && apt-get install -y python3-enchant \
  && wget -O get-pip.py 'https://bootstrap.pypa.io/get-pip.py' \
- && python get-pip.py \
+ && python3 get-pip.py \
     --disable-pip-version-check \
     --no-cache-dir \
  && pip install --no-cache-dir flake8 flake8-docstrings pylint pyenchant
