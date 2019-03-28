@@ -14,7 +14,8 @@ LABEL maintainer="Jedidiah Carlson <jed.e.carlson@gmail.com>"
 #ENV LANG=en_US.UTF-8
 #ENV LC_ALL=en_US.UTF-8
 
-RUN apt-get install python3-pip \
+RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py" \
+ && python3 get-pip.py \
  && pip install pylint \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
  && npm cache clean --force \
