@@ -15,7 +15,9 @@ LABEL maintainer="Jedidiah Carlson <jed.e.carlson@gmail.com>"
 #ENV LANG=en_US.UTF-8
 #ENV LC_ALL=en_US.UTF-8
 
-RUN apt-get update && apt-get upgrade -y \
+RUN USER=c9user \
+ && GROUP=c9user \
+ && apt-get update && apt-get upgrade -y \
  && apt-get install -y python3-enchant \
  && wget -O get-pip.py 'https://bootstrap.pypa.io/get-pip.py' \
  && python3 get-pip.py \
