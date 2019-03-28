@@ -17,7 +17,7 @@ RUN apt-get update && apt-get upgrade -y \
  && python3 get-pip.py \
     --disable-pip-version-check \
     --no-cache-dir \
- && pip install --no-cache-dir flake8 flake8-docstrings pylint pyenchant
+ && pip install --no-cache-dir flake8 flake8-docstrings pylint pyenchant yapf
 
 # ------------------------------------------------------------------------------
 # Clean up APT when done
