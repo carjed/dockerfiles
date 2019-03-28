@@ -6,14 +6,9 @@
 # This dockerfile may not work on RPi you can find more info on how make it work on this issue:
 # https://github.com/sapk/dockerfiles/issues/40
 
-#FROM sapk/cloud9
 FROM mstev0du/cloud9-ide
-# FROM node:slim
 LABEL maintainer="Jedidiah Carlson <jed.e.carlson@gmail.com>"
 
-#ENV LANGUAGE=en_US.UTF-8
-#ENV LANG=en_US.UTF-8
-#ENV LC_ALL=en_US.UTF-8
 USER root
 
 RUN apt-get update && apt-get upgrade -y \
@@ -24,31 +19,28 @@ RUN apt-get update && apt-get upgrade -y \
     --no-cache-dir \
  && pip install --no-cache-dir flake8 flake8-docstrings pylint pyenchant
 
+# ------------------------------------------------------------------------------
+# Clean up APT when done
+# ------------------------------------------------------------------------------
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# ------------------------------------------------------------------------------
+# allow binding for and application running for non-root
+# ------------------------------------------------------------------------------
+RUN setcap 'cap_net_bind_service=+ep' /usr/bin/node
+RUN chown -R c9user:c9user /cloud9
+RUN chown -R c9user:c9user /c9files
+RUN chown -R c9user:c9user /workspace
+RUN npm i --production
+# ------------------------------------------------------------------------------
+# Expose ports.
+# ------------------------------------------------------------------------------
+EXPOSE 80
+EXPOSE 3000
+# ------------------------------------------------------------------------------
+# Startup commands and entrypoint
+# ------------------------------------------------------------------------------
+ENTRYPOINT ["fixuid"]
+CMD ["/bin/sh", "-c", "/usr/bin/node /cloud9/server.js --listen 0.0.0.0 --port 80 -w /workspace"]
+
 USER c9user:c9user
 
-#RUN curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py" \
-# && python get-pip.py \
-# && pip install pylint \
-# && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-# && npm cache clean --force \
-# && git reset --hard
-
-#RUN buildDeps='make build-essential g++ gcc python2.7 locales' && softDeps="tmux git" \
-# && apt-get update && apt-get upgrade -y \
-# && apt-get install -y $buildDeps $softDeps --no-install-recommends \
-# && apt-get install python3-pip \
-# && pip install pylint \
-# && npm install -g forever && npm cache clean --force \
-# && git clone --depth=5 https://github.com/c9/core.git /cloud9 && cd /cloud9 \
-# && scripts/install-sdk.sh \
-# && apt-get purge -y --auto-remove $buildDeps \
-# && apt-get autoremove -y && apt-get autoclean -y && apt-get clean -y \
-# && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
-# && npm cache clean --force \
-# && git reset --hard
-# 
-#VOLUME /workspace
-#EXPOSE 8181 
-#ENTRYPOINT ["forever", "/cloud9/server.js", "-w", "/workspace", "--listen", "0.0.0.0"]
-
-#CMD ["--auth","c9:c9"]
